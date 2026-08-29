@@ -1,0 +1,596 @@
+{% extends "base.html" %}
+
+{% block title %}AI Trip Planner — Voyage AI{% endblock %}
+
+{% block content %}
+
+<div class="planner-page">
+
+    <div class="bg-orb orb-one"></div>
+    <div class="bg-orb orb-two"></div>
+    <div class="grid-overlay"></div>
+
+
+    <!-- HEADER -->
+
+    <section class="planner-header">
+
+        <div class="status-badge">
+            <span class="status-dot"></span>
+            AI TRAVEL AGENT
+        </div>
+
+        <h1>
+            Design your
+            <span>perfect journey.</span>
+        </h1>
+
+        <p>
+            Tell us what you want.
+            Voyage AI will handle the planning.
+        </p>
+
+    </section>
+
+
+    <!-- PLANNER -->
+
+    <section class="planner-container">
+
+        <div class="planner-card">
+
+            <form id="plannerForm">
+
+                {% csrf_token %}
+
+
+                <!-- DESTINATION -->
+
+                <div class="form-section">
+
+                    <div class="form-section-title">
+
+                        <span class="step-number">01</span>
+
+                        <div>
+                            <h3>Where are you going?</h3>
+                            <p>Choose your destination.</p>
+                        </div>
+
+                    </div>
+
+
+                    <div class="destination-input">
+
+                        <span class="input-icon">⌖</span>
+
+                        <div class="input-wrapper">
+
+                            <label for="destination">
+                                DESTINATION
+                            </label>
+
+                            <input
+                                type="text"
+                                id="destination"
+                                name="destination"
+                                placeholder="Goa, Kerala, Manali..."
+                                autocomplete="off"
+                                required
+                            >
+
+                        </div>
+
+                        <span class="input-action">⌕</span>
+
+                    </div>
+
+
+                    <div class="origin-input">
+
+                        <div class="input-wrapper">
+
+                            <label for="origin">
+                                STARTING FROM
+                            </label>
+
+                            <input
+                                type="text"
+                                id="origin"
+                                name="origin"
+                                placeholder="Bengaluru"
+                            >
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+                <!-- TRIP DETAILS -->
+
+                <div class="form-section">
+
+                    <div class="form-section-title">
+
+                        <span class="step-number">02</span>
+
+                        <div>
+                            <h3>Tell us about the trip</h3>
+                            <p>Help AI understand your journey.</p>
+                        </div>
+
+                    </div>
+
+
+                    <div class="details-grid">
+
+                        <div class="modern-input">
+
+                            <label for="days">
+                                <span>TRIP LENGTH</span>
+                                <small>DAYS</small>
+                            </label>
+
+                            <div class="number-input">
+
+                                <button
+                                    type="button"
+                                    class="number-btn"
+                                    data-target="days"
+                                    data-action="minus"
+                                >
+                                    −
+                                </button>
+
+                                <input
+                                    id="days"
+                                    name="days"
+                                    type="number"
+                                    min="1"
+                                    max="30"
+                                    value="5"
+                                >
+
+                                <button
+                                    type="button"
+                                    class="number-btn"
+                                    data-target="days"
+                                    data-action="plus"
+                                >
+                                    +
+                                </button>
+
+                            </div>
+
+                        </div>
+
+
+                        <div class="modern-input">
+
+                            <label for="travelers">
+                                <span>TRAVELERS</span>
+                                <small>PEOPLE</small>
+                            </label>
+
+                            <div class="number-input">
+
+                                <button
+                                    type="button"
+                                    class="number-btn"
+                                    data-target="travelers"
+                                    data-action="minus"
+                                >
+                                    −
+                                </button>
+
+                                <input
+                                    id="travelers"
+                                    name="travelers"
+                                    type="number"
+                                    min="1"
+                                    max="20"
+                                    value="2"
+                                >
+
+                                <button
+                                    type="button"
+                                    class="number-btn"
+                                    data-target="travelers"
+                                    data-action="plus"
+                                >
+                                    +
+                                </button>
+
+                            </div>
+
+                        </div>
+
+
+                        <div class="modern-input budget-input">
+
+                            <label for="budget">
+                                <span>YOUR BUDGET</span>
+                                <small>INR</small>
+                            </label>
+
+                            <div class="currency-input">
+
+                                <span>₹</span>
+
+                                <input
+                                    id="budget"
+                                    name="budget"
+                                    type="number"
+                                    min="0"
+                                    value="30000"
+                                >
+
+                            </div>
+
+                        </div>
+
+
+                        <div class="modern-input">
+
+                            <label for="hotel_style">
+                                <span>TRAVEL STYLE</span>
+                            </label>
+
+                            <select
+                                id="hotel_style"
+                                name="hotel_style"
+                            >
+                                <option value="Budget">
+                                    Budget
+                                </option>
+
+                                <option value="Comfort" selected>
+                                    Comfort
+                                </option>
+
+                                <option value="Luxury">
+                                    Luxury
+                                </option>
+
+                            </select>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+                <!-- INTERESTS -->
+
+                <div class="form-section">
+
+                    <div class="form-section-title">
+
+                        <span class="step-number">03</span>
+
+                        <div>
+                            <h3>What do you love?</h3>
+                            <p>Select your interests.</p>
+                        </div>
+
+                    </div>
+
+
+                    <div class="interest-selection">
+
+                        <button
+                            type="button"
+                            class="interest-chip"
+                            data-interest="Beaches"
+                        >
+                            🏖️
+                            <span>Beaches</span>
+                        </button>
+
+                        <button
+                            type="button"
+                            class="interest-chip"
+                            data-interest="Food"
+                        >
+                            🍜
+                            <span>Food</span>
+                        </button>
+
+                        <button
+                            type="button"
+                            class="interest-chip"
+                            data-interest="Adventure"
+                        >
+                            🧗
+                            <span>Adventure</span>
+                        </button>
+
+                        <button
+                            type="button"
+                            class="interest-chip"
+                            data-interest="Nightlife"
+                        >
+                            🌙
+                            <span>Nightlife</span>
+                        </button>
+
+                        <button
+                            type="button"
+                            class="interest-chip"
+                            data-interest="Nature"
+                        >
+                            🌿
+                            <span>Nature</span>
+                        </button>
+
+                        <button
+                            type="button"
+                            class="interest-chip"
+                            data-interest="Photography"
+                        >
+                            📷
+                            <span>Photography</span>
+                        </button>
+
+                        <button
+                            type="button"
+                            class="interest-chip"
+                            data-interest="Culture"
+                        >
+                            🏛️
+                            <span>Culture</span>
+                        </button>
+
+                        <button
+                            type="button"
+                            class="interest-chip"
+                            data-interest="Shopping"
+                        >
+                            🛍️
+                            <span>Shopping</span>
+                        </button>
+
+                    </div>
+
+
+                    <input
+                        type="hidden"
+                        id="interests"
+                        name="interests"
+                    >
+
+                </div>
+
+
+                <!-- NOTES -->
+
+                <div class="form-section">
+
+                    <div class="form-section-title">
+
+                        <span class="step-number">04</span>
+
+                        <div>
+                            <h3>Anything else?</h3>
+                            <p>Tell your AI copilot anything important.</p>
+                        </div>
+
+                    </div>
+
+
+                    <textarea
+                        id="notes"
+                        name="notes"
+                        class="notes-input"
+                        placeholder="Example: I prefer quiet places, local food and less crowded locations..."
+                        rows="4"
+                    ></textarea>
+
+                </div>
+
+
+                <!-- SUBMIT -->
+
+                <button
+                    type="submit"
+                    class="generate-btn"
+                    id="generateBtn"
+                >
+
+                    <span class="generate-icon">✦</span>
+
+                    <span>
+                        <strong>Plan My Journey</strong>
+                        <small>Let AI build my itinerary</small>
+                    </span>
+
+                    <span class="generate-arrow">
+                        →
+                    </span>
+
+                </button>
+
+            </form>
+
+        </div>
+
+
+        <!-- SIDE INFO -->
+
+        <aside class="planner-side">
+
+            <div class="ai-side-card">
+
+                <div class="ai-side-header">
+
+                    <div class="ai-avatar">
+                        ✦
+                    </div>
+
+                    <div>
+                        <strong>Voyage AI</strong>
+                        <span>Travel Copilot</span>
+                    </div>
+
+                    <span class="online-dot"></span>
+
+                </div>
+
+
+                <div class="ai-message">
+
+                    <p>
+                        Tell me about your dream trip.
+                        I'll optimize the experience around
+                        <strong>your preferences</strong>.
+                    </p>
+
+                </div>
+
+
+                <div class="ai-capabilities">
+
+                    <div>
+                        <span>✦</span>
+                        Personalized itinerary
+                    </div>
+
+                    <div>
+                        <span>₹</span>
+                        Budget optimization
+                    </div>
+
+                    <div>
+                        <span>◎</span>
+                        Smart route planning
+                    </div>
+
+                    <div>
+                        <span>◈</span>
+                        Activity recommendations
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <div class="quick-destination">
+
+                <span class="mini-label">
+                    POPULAR RIGHT NOW
+                </span>
+
+                <div class="destination-list">
+
+                    <button
+                        type="button"
+                        class="quick-destination-btn"
+                        data-destination="Goa"
+                    >
+                        <span>🌴</span>
+                        <div>
+                            <strong>Goa</strong>
+                            <small>Beaches · Nightlife</small>
+                        </div>
+                        →
+                    </button>
+
+                    <button
+                        type="button"
+                        class="quick-destination-btn"
+                        data-destination="Kerala"
+                    >
+                        <span>🌿</span>
+                        <div>
+                            <strong>Kerala</strong>
+                            <small>Nature · Backwaters</small>
+                        </div>
+                        →
+                    </button>
+
+                    <button
+                        type="button"
+                        class="quick-destination-btn"
+                        data-destination="Manali"
+                    >
+                        <span>🏔️</span>
+                        <div>
+                            <strong>Manali</strong>
+                            <small>Mountains · Adventure</small>
+                        </div>
+                        →
+                    </button>
+
+                </div>
+
+            </div>
+
+        </aside>
+
+    </section>
+
+
+    <!-- AI LOADING -->
+
+    <section
+        class="ai-loading-panel hidden"
+        id="loading"
+    >
+
+        <div class="loading-orb">
+            ✦
+        </div>
+
+        <div class="loading-content">
+
+            <span class="mini-label">
+                VOYAGE AI AGENT
+            </span>
+
+            <h2>
+                Building your journey<span class="dots">...</span>
+            </h2>
+
+            <div class="loading-steps">
+
+                <div class="loading-step completed">
+                    <span>✓</span>
+                    Understanding your preferences
+                </div>
+
+                <div class="loading-step completed">
+                    <span>✓</span>
+                    Analyzing your budget
+                </div>
+
+                <div class="loading-step active">
+                    <span class="loading-spinner"></span>
+                    Creating your itinerary
+                </div>
+
+                <div class="loading-step">
+                    <span>○</span>
+                    Optimizing your route
+                </div>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- RESULT -->
+
+    <section
+        class="result-section hidden"
+        id="result"
+    ></section>
+
+</div>
+
+{% endblock %}

@@ -1,0 +1,950 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>NOVAORA — Admin Dashboard</title>
+
+    <link rel="stylesheet"
+          href="{% static 'css/admin.css' %}">
+
+    <link rel="preconnect"
+          href="https://fonts.googleapis.com">
+
+    <link rel="preconnect"
+          href="https://fonts.gstatic.com"
+          crossorigin>
+
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:wght@500;600;700&display=swap"
+          rel="stylesheet">
+</head>
+
+<body>
+
+<div class="admin-layout">
+
+    <!-- =====================================================
+         SIDEBAR
+    ====================================================== -->
+
+    <aside class="sidebar">
+
+        <div class="brand">
+
+            <div class="brand-mark">
+                ✦
+            </div>
+
+            <div class="brand-text">
+
+                <strong>NOVAORA</strong>
+
+                <span>
+                    TRAVEL INTELLIGENCE
+                </span>
+
+            </div>
+
+        </div>
+
+
+        <!-- NAVIGATION -->
+
+        <nav class="sidebar-nav">
+
+            <div class="nav-section-title">
+                OVERVIEW
+            </div>
+
+            <a href="{% url 'admin_dashboard' %}"
+               class="nav-link active">
+
+                <span class="nav-icon">⌂</span>
+
+                <span>
+                    Dashboard
+                </span>
+
+            </a>
+
+
+            <div class="nav-section-title">
+                MANAGEMENT
+            </div>
+
+            <a href="#trips"
+               class="nav-link">
+
+                <span class="nav-icon">✦</span>
+
+                <span>
+                    All Trips
+                </span>
+
+            </a>
+
+
+            <a href="#destinations"
+               class="nav-link">
+
+                <span class="nav-icon">⌖</span>
+
+                <span>
+                    Destinations
+                </span>
+
+            </a>
+
+
+            <a href="#travelers"
+               class="nav-link">
+
+                <span class="nav-icon">♙</span>
+
+                <span>
+                    Travelers
+                </span>
+
+            </a>
+
+
+            <div class="nav-section-title">
+                INSIGHTS
+            </div>
+
+
+            <a href="#analytics"
+               class="nav-link">
+
+                <span class="nav-icon">◫</span>
+
+                <span>
+                    Analytics
+                </span>
+
+            </a>
+
+
+            <a href="#budget"
+               class="nav-link">
+
+                <span class="nav-icon">₹</span>
+
+                <span>
+                    Budget Insights
+                </span>
+
+            </a>
+
+        </nav>
+
+
+        <!-- SIDEBAR FOOTER -->
+
+        <div class="sidebar-footer">
+
+            <div class="admin-profile">
+
+                <div class="profile-avatar">
+
+                    {% if request.user.first_name %}
+                        {{ request.user.first_name|first|upper }}
+                    {% else %}
+                        A
+                    {% endif %}
+
+                </div>
+
+
+                <div class="profile-info">
+
+                    <strong>
+
+                        {% if request.user.get_full_name %}
+                            {{ request.user.get_full_name }}
+                        {% else %}
+                            {{ request.user.username }}
+                        {% endif %}
+
+                    </strong>
+
+                    <span>
+                        Administrator
+                    </span>
+
+                </div>
+
+            </div>
+
+
+            <a href="{% url 'admin_logout' %}"
+               class="logout-link">
+
+                <span>↪</span>
+
+                Logout
+
+            </a>
+
+        </div>
+
+    </aside>
+
+
+    <!-- =====================================================
+         MAIN CONTENT
+    ====================================================== -->
+
+    <main class="main-content">
+
+
+        <!-- TOP BAR -->
+
+        <header class="topbar">
+
+            <div class="mobile-brand">
+                ✦ NOVAORA
+            </div>
+
+
+            <div class="topbar-right">
+
+                <div class="system-status">
+
+                    <span class="status-dot"></span>
+
+                    System Operational
+
+                </div>
+
+
+                <div class="topbar-date">
+
+                    {% now "d M Y" %}
+
+                </div>
+
+
+                <div class="top-avatar">
+
+                    {% if request.user.first_name %}
+
+                        {{ request.user.first_name|first|upper }}
+
+                    {% else %}
+
+                        A
+
+                    {% endif %}
+
+                </div>
+
+            </div>
+
+        </header>
+
+
+        <!-- =================================================
+             DASHBOARD INTRO
+        ================================================== -->
+
+        <section class="dashboard-intro">
+
+            <div>
+
+                <span class="eyebrow">
+                    NOVAORA / OVERVIEW
+                </span>
+
+
+                <h1>
+
+                    Good day,
+
+                    {% if request.user.first_name %}
+
+                        {{ request.user.first_name }}
+
+                    {% else %}
+
+                        Administrator
+
+                    {% endif %}
+
+                    <span>✦</span>
+
+                </h1>
+
+
+                <p>
+                    Monitor your AI travel platform and
+                    explore the journeys created by your travelers.
+                </p>
+
+            </div>
+
+
+            <a href="{% url 'planner' %}"
+               class="view-site-btn"
+               target="_blank">
+
+                <span>↗</span>
+
+                View Travel Experience
+
+            </a>
+
+        </section>
+
+
+        <!-- =================================================
+             STATISTICS
+        ================================================== -->
+
+        <section class="stats-grid">
+
+
+            <!-- TOTAL TRIPS -->
+
+            <div class="stat-card">
+
+                <div class="stat-top">
+
+                    <span class="stat-label">
+                        TOTAL TRIPS
+                    </span>
+
+                    <div class="stat-icon">
+                        ✦
+                    </div>
+
+                </div>
+
+
+                <div class="stat-value">
+
+                    {{ total_trips|default:"0" }}
+
+                </div>
+
+
+                <div class="stat-description">
+                    AI journeys generated
+                </div>
+
+            </div>
+
+
+            <!-- TRAVELERS -->
+
+            <div class="stat-card">
+
+                <div class="stat-top">
+
+                    <span class="stat-label">
+                        TRAVELERS
+                    </span>
+
+                    <div class="stat-icon">
+                        ♙
+                    </div>
+
+                </div>
+
+
+                <div class="stat-value">
+
+                    {{ total_travelers|default:"0" }}
+
+                </div>
+
+
+                <div class="stat-description">
+                    People using NOVAORA
+                </div>
+
+            </div>
+
+
+            <!-- DESTINATIONS -->
+
+            <div class="stat-card">
+
+                <div class="stat-top">
+
+                    <span class="stat-label">
+                        DESTINATIONS
+                    </span>
+
+                    <div class="stat-icon">
+                        ⌖
+                    </div>
+
+                </div>
+
+
+                <div class="stat-value">
+
+                    {{ total_destinations|default:"0" }}
+
+                </div>
+
+
+                <div class="stat-description">
+                    Unique destinations
+                </div>
+
+            </div>
+
+
+            <!-- BUDGET -->
+
+            <div class="stat-card highlight">
+
+                <div class="stat-top">
+
+                    <span class="stat-label">
+                        PLANNED BUDGET
+                    </span>
+
+                    <div class="stat-icon">
+                        ₹
+                    </div>
+
+                </div>
+
+
+                <div class="stat-value money">
+
+                    ₹{{ total_budget|default:"0" }}
+
+                </div>
+
+
+                <div class="stat-description">
+                    Combined traveler budgets
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- =================================================
+             MAIN GRID
+        ================================================== -->
+
+        <section class="dashboard-grid">
+
+
+            <!-- =================================================
+                 RECENT TRIPS
+            ================================================== -->
+
+            <div class="panel trips-panel"
+                 id="trips">
+
+                <div class="panel-header">
+
+                    <div>
+
+                        <span class="eyebrow">
+                            TRAVEL ACTIVITY
+                        </span>
+
+                        <h2>
+                            Recent Journeys
+                        </h2>
+
+                    </div>
+
+
+                    <span class="record-count">
+
+                        Latest {{ recent_trips|length }}
+
+                    </span>
+
+                </div>
+
+
+                {% if recent_trips %}
+
+                    <div class="trip-table-wrapper">
+
+                        <table class="trip-table">
+
+                            <thead>
+
+                                <tr>
+
+                                    <th>
+                                        JOURNEY
+                                    </th>
+
+                                    <th>
+                                        TRAVELERS
+                                    </th>
+
+                                    <th>
+                                        DAYS
+                                    </th>
+
+                                    <th>
+                                        BUDGET
+                                    </th>
+
+                                    <th>
+                                        CREATED
+                                    </th>
+
+                                    <th>
+                                    </th>
+
+                                </tr>
+
+                            </thead>
+
+
+                            <tbody>
+
+                            {% for trip in recent_trips %}
+
+                                <tr>
+
+                                    <td>
+
+                                        <div class="journey-cell">
+
+                                            <div class="destination-icon">
+                                                ✦
+                                            </div>
+
+
+                                            <div>
+
+                                                <strong>
+                                                    {{ trip.destination }}
+                                                </strong>
+
+
+                                                <span>
+
+                                                    {% if trip.origin %}
+
+                                                        {{ trip.origin }}
+                                                        →
+
+                                                    {% endif %}
+
+                                                    {{ trip.destination }}
+
+                                                </span>
+
+                                            </div>
+
+                                        </div>
+
+                                    </td>
+
+
+                                    <td>
+
+                                        <span class="table-number">
+
+                                            {{ trip.travelers }}
+
+                                        </span>
+
+                                    </td>
+
+
+                                    <td>
+
+                                        <span class="days-badge">
+
+                                            {{ trip.days }} days
+
+                                        </span>
+
+                                    </td>
+
+
+                                    <td>
+
+                                        <strong class="budget-value">
+
+                                            ₹{{ trip.budget }}
+
+                                        </strong>
+
+                                    </td>
+
+
+                                    <td>
+
+                                        <span class="date-value">
+
+                                            {{ trip.created_at|date:"d M Y" }}
+
+                                        </span>
+
+                                    </td>
+
+
+                                    <td>
+
+                                        <a href="{% url 'admin_trip_detail' trip.id %}"
+                                           class="view-trip">
+
+                                            View
+
+                                            <span>
+                                                →
+                                            </span>
+
+                                        </a>
+
+                                    </td>
+
+                                </tr>
+
+                            {% endfor %}
+
+                            </tbody>
+
+                        </table>
+
+                    </div>
+
+                {% else %}
+
+                    <div class="empty-state">
+
+                        <div class="empty-icon">
+                            ✦
+                        </div>
+
+
+                        <h3>
+                            No journeys yet
+                        </h3>
+
+
+                        <p>
+                            Generated trips will appear here automatically.
+                        </p>
+
+                    </div>
+
+                {% endif %}
+
+            </div>
+
+
+            <!-- =================================================
+                 PLATFORM INTELLIGENCE
+            ================================================== -->
+
+            <div class="panel overview-panel"
+                 id="analytics">
+
+                <div class="panel-header">
+
+                    <div>
+
+                        <span class="eyebrow">
+                            PLATFORM
+                        </span>
+
+                        <h2>
+                            Intelligence
+                        </h2>
+
+                    </div>
+
+                </div>
+
+
+                <div class="intelligence-list">
+
+
+                    <div class="intelligence-item">
+
+                        <div class="intelligence-icon">
+                            ✦
+                        </div>
+
+
+                        <div>
+
+                            <strong>
+                                AI Planning
+                            </strong>
+
+                            <span>
+                                Personalized itineraries
+                            </span>
+
+                        </div>
+
+
+                        <span class="active-label">
+                            ACTIVE
+                        </span>
+
+                    </div>
+
+
+                    <div class="intelligence-item">
+
+                        <div class="intelligence-icon">
+                            ₹
+                        </div>
+
+
+                        <div>
+
+                            <strong>
+                                Budget Engine
+                            </strong>
+
+                            <span>
+                                Smart cost estimation
+                            </span>
+
+                        </div>
+
+
+                        <span class="active-label">
+                            ACTIVE
+                        </span>
+
+                    </div>
+
+
+                    <div class="intelligence-item">
+
+                        <div class="intelligence-icon">
+                            ◈
+                        </div>
+
+
+                        <div>
+
+                            <strong>
+                                Itinerary Engine
+                            </strong>
+
+                            <span>
+                                Day-by-day optimization
+                            </span>
+
+                        </div>
+
+
+                        <span class="active-label">
+                            ACTIVE
+                        </span>
+
+                    </div>
+
+
+                    <div class="intelligence-item">
+
+                        <div class="intelligence-icon">
+                            ✓
+                        </div>
+
+
+                        <div>
+
+                            <strong>
+                                Data Storage
+                            </strong>
+
+                            <span>
+                                Trip records synchronized
+                            </span>
+
+                        </div>
+
+
+                        <span class="active-label">
+                            ACTIVE
+                        </span>
+
+                    </div>
+
+                </div>
+
+
+                <div class="platform-card">
+
+                    <div class="platform-glow"></div>
+
+                    <span>
+                        POWERED BY
+                    </span>
+
+
+                    <strong>
+                        NOVAORA AI
+                    </strong>
+
+
+                    <p>
+                        Intelligent travel planning
+                        built around your journey.
+                    </p>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- =================================================
+             DESTINATION / BUDGET
+        ================================================== -->
+
+        <section class="bottom-grid">
+
+
+            <!-- DESTINATIONS -->
+
+            <div class="panel"
+                 id="destinations">
+
+                <div class="panel-header">
+
+                    <div>
+
+                        <span class="eyebrow">
+                            DISCOVERY
+                        </span>
+
+                        <h2>
+                            Destination Intelligence
+                        </h2>
+
+                    </div>
+
+                </div>
+
+
+                <div class="coming-content">
+
+                    <div class="large-symbol">
+                        ⌖
+                    </div>
+
+
+                    <div>
+
+                        <h3>
+                            Destination analytics
+                        </h3>
+
+
+                        <p>
+                            Your destination insights will grow
+                            automatically as travelers create
+                            more journeys.
+                        </p>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <!-- BUDGET -->
+
+            <div class="panel"
+                 id="budget">
+
+                <div class="panel-header">
+
+                    <div>
+
+                        <span class="eyebrow">
+                            FINANCIAL INTELLIGENCE
+                        </span>
+
+                        <h2>
+                            Budget Overview
+                        </h2>
+
+                    </div>
+
+                </div>
+
+
+                <div class="budget-overview">
+
+                    <div class="budget-big-number">
+
+                        ₹{{ total_budget|default:"0" }}
+
+                    </div>
+
+
+                    <span>
+                        Total planned traveler budget
+                    </span>
+
+
+                    <div class="budget-line">
+
+                        <span></span>
+
+                    </div>
+
+
+                    <p>
+                        Budget data is collected from
+                        AI-generated travel plans.
+                    </p>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- =================================================
+             FOOTER
+        ================================================== -->
+
+        <footer class="admin-footer">
+
+            <span>
+
+                © {% now "Y" %} NOVAORA
+
+            </span>
+
+
+            <span>
+
+                AI TRAVEL INTELLIGENCE PLATFORM
+
+            </span>
+
+        </footer>
+
+    </main>
+
+</div>
+
+</body>
+</html>

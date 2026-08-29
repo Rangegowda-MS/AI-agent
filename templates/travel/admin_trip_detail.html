@@ -1,0 +1,1025 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>
+        {{ trip.destination }} | Trip Details
+    </title>
+
+    <style>
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family:
+                Inter,
+                -apple-system,
+                BlinkMacSystemFont,
+                "Segoe UI",
+                sans-serif;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    #07111f,
+                    #0b1728 50%,
+                    #111827
+                );
+
+            color: #f8fafc;
+            min-height: 100vh;
+        }
+
+        .page {
+            max-width: 1400px;
+            margin: auto;
+            padding: 35px;
+        }
+
+        /* =========================================
+           TOP BAR
+        ========================================= */
+
+        .topbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 30px;
+        }
+
+        .brand {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .brand-icon {
+            width: 45px;
+            height: 45px;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            border-radius: 14px;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    #d9b76c,
+                    #f4d58b
+                );
+
+            color: #111827;
+            font-size: 22px;
+            font-weight: 800;
+        }
+
+        .brand h1 {
+            font-size: 20px;
+        }
+
+        .brand span {
+            display: block;
+            color: #94a3b8;
+            font-size: 12px;
+            margin-top: 3px;
+        }
+
+        .back-btn {
+            text-decoration: none;
+            color: #e2e8f0;
+
+            padding: 11px 18px;
+
+            border: 1px solid
+                rgba(255,255,255,.12);
+
+            border-radius: 12px;
+
+            background:
+                rgba(255,255,255,.05);
+
+            transition: .25s;
+        }
+
+        .back-btn:hover {
+            background:
+                rgba(255,255,255,.10);
+
+            transform: translateY(-2px);
+        }
+
+
+        /* =========================================
+           HERO
+        ========================================= */
+
+        .hero {
+            position: relative;
+            overflow: hidden;
+
+            padding: 40px;
+
+            border-radius: 28px;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    rgba(217,183,108,.16),
+                    rgba(255,255,255,.045)
+                );
+
+            border:
+                1px solid
+                rgba(255,255,255,.10);
+
+            box-shadow:
+                0 30px 80px
+                rgba(0,0,0,.25);
+
+            margin-bottom: 25px;
+        }
+
+        .hero::after {
+            content: "";
+
+            position: absolute;
+
+            width: 300px;
+            height: 300px;
+
+            right: -120px;
+            top: -150px;
+
+            border-radius: 50%;
+
+            background:
+                rgba(217,183,108,.12);
+
+            filter: blur(30px);
+        }
+
+        .eyebrow {
+            color: #d9b76c;
+
+            font-size: 12px;
+
+            font-weight: 700;
+
+            letter-spacing: 2px;
+
+            margin-bottom: 12px;
+        }
+
+        .hero h2 {
+            font-size: clamp(32px, 5vw, 58px);
+
+            line-height: 1.05;
+
+            margin-bottom: 14px;
+        }
+
+        .hero p {
+            color: #94a3b8;
+            font-size: 16px;
+        }
+
+
+        /* =========================================
+           INFO GRID
+        ========================================= */
+
+        .info-grid {
+            display: grid;
+
+            grid-template-columns:
+                repeat(4, 1fr);
+
+            gap: 16px;
+
+            margin-bottom: 30px;
+        }
+
+        .info-card {
+            padding: 22px;
+
+            border-radius: 20px;
+
+            background:
+                rgba(255,255,255,.045);
+
+            border:
+                1px solid
+                rgba(255,255,255,.08);
+        }
+
+        .info-card span {
+            display: block;
+
+            color: #64748b;
+
+            font-size: 11px;
+
+            letter-spacing: 1.5px;
+
+            text-transform: uppercase;
+
+            margin-bottom: 8px;
+        }
+
+        .info-card strong {
+            font-size: 21px;
+        }
+
+
+        /* =========================================
+           MAIN GRID
+        ========================================= */
+
+        .main-grid {
+            display: grid;
+
+            grid-template-columns:
+                minmax(0, 2fr)
+                minmax(300px, 1fr);
+
+            gap: 25px;
+        }
+
+        .section {
+            background:
+                rgba(255,255,255,.045);
+
+            border:
+                1px solid
+                rgba(255,255,255,.08);
+
+            border-radius: 24px;
+
+            padding: 28px;
+
+            margin-bottom: 25px;
+        }
+
+        .section-title {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+
+            margin-bottom: 24px;
+        }
+
+        .section-title h3 {
+            font-size: 22px;
+        }
+
+        .section-title span {
+            color: #d9b76c;
+
+            font-size: 12px;
+
+            letter-spacing: 1px;
+        }
+
+
+        /* =========================================
+           DAY CARD
+        ========================================= */
+
+        .day-card {
+            position: relative;
+
+            padding: 25px;
+
+            margin-bottom: 18px;
+
+            border-radius: 20px;
+
+            background:
+                rgba(7,17,31,.75);
+
+            border:
+                1px solid
+                rgba(255,255,255,.07);
+        }
+
+        .day-card:last-child {
+            margin-bottom: 0;
+        }
+
+        .day-header {
+            display: flex;
+
+            justify-content: space-between;
+
+            align-items: center;
+
+            margin-bottom: 22px;
+        }
+
+        .day-number {
+            color: #d9b76c;
+
+            font-size: 12px;
+
+            font-weight: 800;
+
+            letter-spacing: 2px;
+        }
+
+        .day-cost {
+            color: #f8fafc;
+
+            padding: 7px 12px;
+
+            border-radius: 20px;
+
+            background:
+                rgba(217,183,108,.12);
+
+            color: #e8cb8b;
+
+            font-size: 13px;
+        }
+
+        .day-card h4 {
+            font-size: 22px;
+
+            margin-bottom: 22px;
+        }
+
+
+        /* =========================================
+           TIMELINE
+        ========================================= */
+
+        .timeline {
+            border-left:
+                1px solid
+                rgba(217,183,108,.25);
+
+            padding-left: 20px;
+        }
+
+        .timeline-item {
+            position: relative;
+
+            margin-bottom: 22px;
+        }
+
+        .timeline-item:last-child {
+            margin-bottom: 0;
+        }
+
+        .timeline-item::before {
+            content: "";
+
+            position: absolute;
+
+            left: -26px;
+
+            top: 5px;
+
+            width: 10px;
+            height: 10px;
+
+            border-radius: 50%;
+
+            background: #d9b76c;
+
+            box-shadow:
+                0 0 0 5px
+                rgba(217,183,108,.10);
+        }
+
+        .timeline-item strong {
+            display: block;
+
+            color: #d9b76c;
+
+            font-size: 11px;
+
+            letter-spacing: 1.5px;
+
+            margin-bottom: 6px;
+        }
+
+        .timeline-item p {
+            color: #cbd5e1;
+
+            line-height: 1.65;
+
+            font-size: 14px;
+        }
+
+
+        /* =========================================
+           SIDEBAR
+        ========================================= */
+
+        .side-card {
+            padding: 25px;
+
+            border-radius: 22px;
+
+            background:
+                rgba(255,255,255,.045);
+
+            border:
+                1px solid
+                rgba(255,255,255,.08);
+
+            margin-bottom: 20px;
+        }
+
+        .side-card h3 {
+            margin-bottom: 20px;
+            font-size: 18px;
+        }
+
+        .detail-row {
+            display: flex;
+
+            justify-content: space-between;
+
+            gap: 15px;
+
+            padding: 13px 0;
+
+            border-bottom:
+                1px solid
+                rgba(255,255,255,.07);
+        }
+
+        .detail-row:last-child {
+            border-bottom: none;
+        }
+
+        .detail-row span {
+            color: #64748b;
+            font-size: 13px;
+        }
+
+        .detail-row strong {
+            text-align: right;
+            font-size: 14px;
+        }
+
+
+        /* =========================================
+           BUDGET
+        ========================================= */
+
+        .budget-total {
+            font-size: 35px;
+
+            color: #e8cb8b;
+
+            margin-bottom: 20px;
+        }
+
+        .budget-item {
+            margin-bottom: 17px;
+        }
+
+        .budget-label {
+            display: flex;
+
+            justify-content: space-between;
+
+            margin-bottom: 7px;
+
+            font-size: 13px;
+        }
+
+        .budget-label span {
+            color: #94a3b8;
+        }
+
+        .budget-bar {
+            height: 7px;
+
+            border-radius: 10px;
+
+            background:
+                rgba(255,255,255,.08);
+
+            overflow: hidden;
+        }
+
+        .budget-fill {
+            height: 100%;
+
+            background:
+                linear-gradient(
+                    90deg,
+                    #d9b76c,
+                    #f4d58b
+                );
+
+            border-radius: inherit;
+        }
+
+
+        /* =========================================
+           NOTES
+        ========================================= */
+
+        .notes {
+            color: #cbd5e1;
+
+            line-height: 1.7;
+
+            font-size: 14px;
+
+            background:
+                rgba(255,255,255,.035);
+
+            padding: 18px;
+
+            border-radius: 15px;
+        }
+
+
+        /* =========================================
+           RESPONSIVE
+        ========================================= */
+
+        @media (max-width: 1000px) {
+
+            .info-grid {
+                grid-template-columns:
+                    repeat(2, 1fr);
+            }
+
+            .main-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+
+        @media (max-width: 600px) {
+
+            .page {
+                padding: 18px;
+            }
+
+            .topbar {
+                align-items: flex-start;
+                gap: 15px;
+            }
+
+            .hero {
+                padding: 25px;
+            }
+
+            .info-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .day-card {
+                padding: 18px;
+            }
+
+            .day-header {
+                align-items: flex-start;
+                gap: 10px;
+            }
+        }
+
+    </style>
+</head>
+
+<body>
+
+<div class="page">
+
+    <!-- =========================================
+         TOP BAR
+    ========================================== -->
+
+    <header class="topbar">
+
+        <div class="brand">
+
+            <div class="brand-icon">
+                ✦
+            </div>
+
+            <div>
+
+                <h1>Atlasora</h1>
+
+                <span>
+                    AI Travel Intelligence
+                </span>
+
+            </div>
+
+        </div>
+
+        <a
+            href="{% url 'admin_dashboard' %}"
+            class="back-btn"
+        >
+            ← Dashboard
+        </a>
+
+    </header>
+
+
+    <!-- =========================================
+         HERO
+    ========================================== -->
+
+    <section class="hero">
+
+        <div class="eyebrow">
+            AI GENERATED TRIP
+        </div>
+
+        <h2>
+            {{ trip.destination }}
+        </h2>
+
+        <p>
+            {{ trip.title }}
+        </p>
+
+    </section>
+
+
+    <!-- =========================================
+         TRIP OVERVIEW
+    ========================================== -->
+
+    <section class="info-grid">
+
+        <div class="info-card">
+
+            <span>
+                Trip ID
+            </span>
+
+            <strong>
+                #{{ trip.id }}
+            </strong>
+
+        </div>
+
+
+        <div class="info-card">
+
+            <span>
+                Duration
+            </span>
+
+            <strong>
+                {{ trip.days }} Days
+            </strong>
+
+        </div>
+
+
+        <div class="info-card">
+
+            <span>
+                Travelers
+            </span>
+
+            <strong>
+                {{ trip.travelers }}
+            </strong>
+
+        </div>
+
+
+        <div class="info-card">
+
+            <span>
+                Budget
+            </span>
+
+            <strong>
+                ₹{{ trip.budget|default:"0" }}
+            </strong>
+
+        </div>
+
+    </section>
+
+
+    <!-- =========================================
+         MAIN
+    ========================================== -->
+
+    <div class="main-grid">
+
+
+        <!-- =====================================
+             ITINERARY
+        ====================================== -->
+
+        <main>
+
+            <section class="section">
+
+                <div class="section-title">
+
+                    <div>
+
+                        <span>
+                            JOURNEY PLAN
+                        </span>
+
+                        <h3>
+                            Day-by-Day Itinerary
+                        </h3>
+
+                    </div>
+
+                </div>
+
+
+                {% for day in itinerary %}
+
+                    <article class="day-card">
+
+                        <div class="day-header">
+
+                            <span class="day-number">
+
+                                DAY
+                                {{ day.day_number|stringformat:"02d" }}
+
+                            </span>
+
+                            <span class="day-cost">
+
+                                ₹{{ day.estimated_cost|default:"0" }}
+
+                            </span>
+
+                        </div>
+
+
+                        <h4>
+                            {{ day.title }}
+                        </h4>
+
+
+                        <div class="timeline">
+
+
+                            <div class="timeline-item">
+
+                                <strong>
+                                    ☀ MORNING
+                                </strong>
+
+                                <p>
+                                    {{ day.morning }}
+                                </p>
+
+                            </div>
+
+
+                            <div class="timeline-item">
+
+                                <strong>
+                                    ◐ AFTERNOON
+                                </strong>
+
+                                <p>
+                                    {{ day.afternoon }}
+                                </p>
+
+                            </div>
+
+
+                            <div class="timeline-item">
+
+                                <strong>
+                                    ☾ EVENING
+                                </strong>
+
+                                <p>
+                                    {{ day.evening }}
+                                </p>
+
+                            </div>
+
+
+                        </div>
+
+                    </article>
+
+                {% empty %}
+
+                    <div class="notes">
+                        No itinerary days found.
+                    </div>
+
+                {% endfor %}
+
+            </section>
+
+
+            <!-- =================================
+                 NOTES
+            ================================== -->
+
+            {% if trip.notes %}
+
+                <section class="section">
+
+                    <div class="section-title">
+
+                        <div>
+
+                            <span>
+                                TRAVELER NOTES
+                            </span>
+
+                            <h3>
+                                Additional Requirements
+                            </h3>
+
+                        </div>
+
+                    </div>
+
+                    <div class="notes">
+                        {{ trip.notes }}
+                    </div>
+
+                </section>
+
+            {% endif %}
+
+        </main>
+
+
+        <!-- =====================================
+             SIDEBAR
+        ====================================== -->
+
+        <aside>
+
+
+            <!-- TRIP DETAILS -->
+
+            <div class="side-card">
+
+                <h3>
+                    Trip Information
+                </h3>
+
+
+                <div class="detail-row">
+
+                    <span>
+                        Origin
+                    </span>
+
+                    <strong>
+                        {{ trip.origin|default:"Not specified" }}
+                    </strong>
+
+                </div>
+
+
+                <div class="detail-row">
+
+                    <span>
+                        Destination
+                    </span>
+
+                    <strong>
+                        {{ trip.destination }}
+                    </strong>
+
+                </div>
+
+
+                <div class="detail-row">
+
+                    <span>
+                        Hotel Style
+                    </span>
+
+                    <strong>
+                        {{ trip.hotel_style }}
+                    </strong>
+
+                </div>
+
+
+                <div class="detail-row">
+
+                    <span>
+                        Interests
+                    </span>
+
+                    <strong>
+                        {{ trip.interests|default:"General sightseeing" }}
+                    </strong>
+
+                </div>
+
+
+                <div class="detail-row">
+
+                    <span>
+                        Created
+                    </span>
+
+                    <strong>
+                        {{ trip.created_at|date:"d M Y, H:i" }}
+                    </strong>
+
+                </div>
+
+            </div>
+
+
+            <!-- BUDGET -->
+
+            <div class="side-card">
+
+                <h3>
+                    Trip Budget
+                </h3>
+
+                <div class="budget-total">
+                    ₹{{ trip.budget|default:"0" }}
+                </div>
+
+                <div class="budget-item">
+
+                    <div class="budget-label">
+
+                        <span>
+                            Planned Budget
+                        </span>
+
+                        <strong>
+                            100%
+                        </strong>
+
+                    </div>
+
+                    <div class="budget-bar">
+
+                        <div
+                            class="budget-fill"
+                            style="width:100%"
+                        ></div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <!-- ADMIN ACTION -->
+
+            <div class="side-card">
+
+                <h3>
+                    Administration
+                </h3>
+
+                <a
+                    href="{% url 'admin_dashboard' %}"
+                    class="back-btn"
+                    style="
+                        display:block;
+                        text-align:center;
+                    "
+                >
+                    ← Back to All Trips
+                </a>
+
+            </div>
+
+        </aside>
+
+    </div>
+
+</div>
+
+</body>
+</html>

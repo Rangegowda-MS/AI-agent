@@ -1,0 +1,431 @@
+{% extends "base.html" %}
+
+{% block title %}Voyage AI — Your Personal Travel Copilot{% endblock %}
+
+{% block content %}
+
+<div class="home-page">
+
+    <!-- Background decoration -->
+    <div class="bg-orb orb-one"></div>
+    <div class="bg-orb orb-two"></div>
+    <div class="grid-overlay"></div>
+
+    <!-- HERO -->
+    <section class="hero-section">
+
+        <div class="hero-content">
+
+            <div class="status-badge">
+                <span class="status-dot"></span>
+                AI TRAVEL COPILOT
+            </div>
+
+            <h1>
+                Travel smarter.
+                <span>Explore deeper.</span>
+            </h1>
+
+            <p class="hero-description">
+                Tell Voyage AI where you want to go, your budget and what
+                you love. Our intelligent travel planner builds a personalized
+                journey around you.
+            </p>
+
+            <div class="hero-buttons">
+
+                <a href="{% url 'planner' %}" class="primary-btn">
+                    <span>✦</span>
+                    Start Planning
+                    <span class="arrow">→</span>
+                </a>
+
+                <a href="#features" class="secondary-btn">
+                    Explore Features
+                </a>
+
+            </div>
+
+            <div class="hero-stats">
+
+                <div class="stat">
+                    <strong>AI</strong>
+                    <span>Powered Planning</span>
+                </div>
+
+                <div class="stat-divider"></div>
+
+                <div class="stat">
+                    <strong>24/7</strong>
+                    <span>Travel Copilot</span>
+                </div>
+
+                <div class="stat-divider"></div>
+
+                <div class="stat">
+                    <strong>∞</strong>
+                    <span>Possibilities</span>
+                </div>
+
+            </div>
+
+        </div>
+
+        <!-- AI PREVIEW CARD -->
+
+        <div class="hero-visual">
+
+            <div class="floating-tag tag-top">
+                <span>✦</span>
+                AI is thinking...
+            </div>
+
+            <div class="travel-card">
+
+                <div class="card-top">
+
+                    <div>
+                        <span class="mini-label">YOUR NEXT ADVENTURE</span>
+
+                        <h3>
+                            Bengaluru
+                            <span>→</span>
+                            Goa
+                        </h3>
+                    </div>
+
+                    <div class="ai-icon">
+                        ✦
+                    </div>
+
+                </div>
+
+                <div class="route-line">
+
+                    <div class="route-point active"></div>
+                    <div class="route-path"></div>
+                    <div class="route-point"></div>
+
+                </div>
+
+                <div class="trip-info">
+
+                    <div>
+                        <span>TRIP</span>
+                        <strong>5 Days</strong>
+                    </div>
+
+                    <div>
+                        <span>TRAVELERS</span>
+                        <strong>2 People</strong>
+                    </div>
+
+                    <div>
+                        <span>BUDGET</span>
+                        <strong>₹30K</strong>
+                    </div>
+
+                </div>
+
+                <div class="interest-row">
+
+                    <span>🏖️ Beaches</span>
+                    <span>🍜 Food</span>
+                    <span>🌙 Nightlife</span>
+
+                </div>
+
+                <div class="ai-thinking">
+
+                    <div class="thinking-header">
+                        <div class="thinking-title">
+                            <span class="pulse-icon">✦</span>
+                            Voyage AI
+                        </div>
+
+                        <span class="thinking-status">
+                            ACTIVE
+                        </span>
+                    </div>
+
+                    <div class="thinking-item completed">
+                        <span>✓</span>
+                        Understanding preferences
+                    </div>
+
+                    <div class="thinking-item completed">
+                        <span>✓</span>
+                        Analyzing your budget
+                    </div>
+
+                    <div class="thinking-item active">
+                        <span class="loading-ring"></span>
+                        Optimizing your itinerary
+                    </div>
+
+                </div>
+
+            </div>
+
+            <div class="floating-tag tag-bottom">
+                <span>✓</span>
+                Personalized for you
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- TRUST STRIP -->
+
+    <section class="trust-strip">
+
+        <div class="trust-item">
+            <span>✦</span>
+            Intelligent
+        </div>
+
+        <div class="trust-item">
+            <span>◈</span>
+            Personalized
+        </div>
+
+        <div class="trust-item">
+            <span>⌁</span>
+            Budget Smart
+        </div>
+
+        <div class="trust-item">
+            <span>◎</span>
+            Route Optimized
+        </div>
+
+        <div class="trust-item">
+            <span>◇</span>
+            Always Learning
+        </div>
+
+    </section>
+
+
+    <!-- FEATURES -->
+
+    <section class="features-section" id="features">
+
+        <div class="section-heading">
+
+            <div class="section-eyebrow">
+                WHY VOYAGE AI
+            </div>
+
+            <h2>
+                More than a planner.
+                <span>Your travel copilot.</span>
+            </h2>
+
+            <p>
+                Voyage AI combines intelligent recommendations, budget
+                awareness and personalized planning into one experience.
+            </p>
+
+        </div>
+
+
+        <div class="feature-grid">
+
+            <article class="feature-card large-feature">
+
+                <div class="feature-icon">
+                    ✦
+                </div>
+
+                <span class="feature-number">01</span>
+
+                <h3>AI-Powered Planning</h3>
+
+                <p>
+                    Describe your dream trip naturally and let AI transform
+                    your preferences into a detailed travel plan.
+                </p>
+
+                <div class="feature-preview chat-preview">
+
+                    <div class="chat-message user-message">
+                        5 days in Goa under ₹30k
+                    </div>
+
+                    <div class="chat-message ai-message">
+                        <span>✦</span>
+                        I've optimized your trip around beaches,
+                        food and nightlife.
+                    </div>
+
+                </div>
+
+            </article>
+
+
+            <article class="feature-card">
+
+                <div class="feature-icon">
+                    ₹
+                </div>
+
+                <span class="feature-number">02</span>
+
+                <h3>Smart Budgeting</h3>
+
+                <p>
+                    Keep your entire trip within your budget with intelligent
+                    cost allocation.
+                </p>
+
+                <div class="budget-preview">
+
+                    <div class="budget-header">
+                        <span>₹30,000</span>
+                        <small>TRIP BUDGET</small>
+                    </div>
+
+                    <div class="budget-bar">
+                        <span></span>
+                    </div>
+
+                    <div class="budget-footer">
+                        <span>₹26,400 used</span>
+                        <strong>₹3,600 left</strong>
+                    </div>
+
+                </div>
+
+            </article>
+
+
+            <article class="feature-card">
+
+                <div class="feature-icon">
+                    ◎
+                </div>
+
+                <span class="feature-number">03</span>
+
+                <h3>Route Optimization</h3>
+
+                <p>
+                    Organize destinations intelligently to reduce unnecessary
+                    travel.
+                </p>
+
+                <div class="route-preview">
+
+                    <div class="preview-location">
+                        <span>●</span>
+                        Hotel
+                    </div>
+
+                    <div class="preview-line"></div>
+
+                    <div class="preview-location">
+                        <span>●</span>
+                        Beach
+                    </div>
+
+                    <div class="preview-line"></div>
+
+                    <div class="preview-location">
+                        <span>●</span>
+                        Fort
+                    </div>
+
+                </div>
+
+            </article>
+
+
+            <article class="feature-card wide-feature">
+
+                <div class="wide-feature-content">
+
+                    <div class="feature-icon">
+                        ◈
+                    </div>
+
+                    <span class="feature-number">04</span>
+
+                    <h3>Personalized Experiences</h3>
+
+                    <p>
+                        Your trip isn't generated from a generic template.
+                        Voyage AI considers your interests, travel style,
+                        budget and preferences.
+                    </p>
+
+                    <div class="preference-chips">
+
+                        <span>Adventure</span>
+                        <span>Food</span>
+                        <span>Photography</span>
+                        <span>Nature</span>
+
+                    </div>
+
+                </div>
+
+                <div class="personalization-visual">
+
+                    <div class="profile-ring">
+                        <div>
+                            <span>AI</span>
+                            <small>PROFILE</small>
+                        </div>
+                    </div>
+
+                    <div class="orbit orbit-1"></div>
+                    <div class="orbit orbit-2"></div>
+
+                </div>
+
+            </article>
+
+        </div>
+
+    </section>
+
+
+    <!-- CTA -->
+
+    <section class="cta-section">
+
+        <div class="cta-glow"></div>
+
+        <div class="cta-content">
+
+            <div class="section-eyebrow">
+                READY TO EXPLORE?
+            </div>
+
+            <h2>
+                Your next great story
+                <span>starts here.</span>
+            </h2>
+
+            <p>
+                Give Voyage AI a destination.
+                We'll take care of the rest.
+            </p>
+
+            <a href="{% url 'planner' %}" class="primary-btn large-btn">
+                <span>✦</span>
+                Create My Journey
+                <span class="arrow">→</span>
+            </a>
+
+        </div>
+
+    </section>
+
+</div>
+
+
+{% endblock %}
