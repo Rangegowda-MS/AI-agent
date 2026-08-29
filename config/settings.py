@@ -48,3 +48,9 @@ DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 REST_FRAMEWORK = {"DEFAULT_PERMISSION_CLASSES": ["rest_framework.permissions.AllowAny"]}
 AI_PROVIDER = os.getenv("AI_PROVIDER", "mock")
 OPENAI_API_KEY = os.getenv("OPENAI_API_KEY", "")
+CSRF_TRUSTED_ORIGINS = [
+    "https://*.onrender.com",
+]
+STATIC_URL = "static/"
+
+STATIC_ROOT = BASE_DIR / "staticfiles"
